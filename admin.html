@@ -1,22 +1,63 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Paneli</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <section>
-        <h2>Yeni Ürün Ekle</h2>
-        <form id="productForm">
-            <input type="text" id="productName" placeholder="Ürün Adı" required><br><br>
-            <textarea id="productDesc" placeholder="Ürün Açıklaması" required></textarea><br><br>
-            <input type="text" id="productImage" placeholder="Görsel URL (örnek: https://...)" required><br><br>
-            <button type="submit">Ürünü Kaydet</button>
-        </form>
-        <p><a href="index.html">← Ana Sayfaya Dön</a></p>
-    </section>
+  <meta charset="UTF-8">
+  <title>Admin Paneli - STARPETRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #panel {
+      display: none;
+    }
+  </style>
+  <script>
+    function girisYap() {
+      const sifre = document.getElementById("sifre").value;
+      if (sifre === "starpetro123") {
+        document.getElementById("girisFormu").style.display = "none";
+        document.getElementById("panel").style.display = "block";
+      } else {
+        alert("Hatalı şifre! Lütfen tekrar deneyin.");
+      }
+    }
 
-    <script src="script.js"></script>
+    function urunEkle() {
+      const urunAdi = document.getElementById("urunAdi").value;
+      const urunAciklama = document.getElementById("urunAciklama").value;
+      const urunListesi = document.getElementById("urunListesi");
+
+      const yeniUrun = document.createElement("li");
+      yeniUrun.textContent = urunAdi + " - " + urunAciklama;
+      urunListesi.appendChild(yeniUrun);
+
+      document.getElementById("urunForm").reset();
+    }
+  </script>
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Admin Giriş</h2>
+
+    <!-- Şifre Formu -->
+    <div id="girisFormu">
+      <input type="password" id="sifre" class="form-control mb-3" placeholder="Şifre girin">
+      <button onclick="girisYap()" class="btn btn-dark">Giriş Yap</button>
+    </div>
+
+    <!-- Admin Paneli -->
+    <div id="panel">
+      <h3 class="mb-3">Ürün Ekle</h3>
+      <form id="urunForm" onsubmit="event.preventDefault(); urunEkle();">
+        <input type="text" id="urunAdi" class="form-control mb-2" placeholder="Ürün adı" required>
+        <input type="text" id="urunAciklama" class="form-control mb-2" placeholder="Ürün açıklaması" required>
+        <button type="submit" class="btn btn-primary">Ürün Ekle</button>
+      </form>
+
+      <hr class="my-4">
+
+      <h5>Eklenen Ürünler:</h5>
+      <ul id="urunListesi" class="list-group"></ul>
+    </div>
+  </div>
 </body>
 </html>
